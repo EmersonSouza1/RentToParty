@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "e327309f-9af8-4b7d-bc61-ea1b38694f86": {
+      "ProjectGuid": "e327309f-9af8-4b7d-bc61-ea1b38694f86",
+      "DisplayName": "RentToParty",
+      "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Arquivos Diversos",
+      "ColorIndex": -1
+    },
+    "49c8911b-ce61-474f-9165-ec146b7f2f73": {
+      "ProjectGuid": "49c8911b-ce61-474f-9165-ec146b7f2f73",
+      "DisplayName": "RentToParty",
+      "ColorIndex": 1
+    },
+    "aeb82cbf-ce3e-4765-a77f-a94090bfb788": {
+      "ProjectGuid": "aeb82cbf-ce3e-4765-a77f-a94090bfb788",
+      "DisplayName": "RentToParty.Models",
+      "ColorIndex": 2
+    },
+    "b8ef5ef1-c707-4150-aa89-c9dd18b9c675": {
+      "ProjectGuid": "b8ef5ef1-c707-4150-aa89-c9dd18b9c675",
+      "DisplayName": "RentToParty.Dal",
+      "ColorIndex": 3
+    },
+    "78394784-9339-4a64-8b33-d0a596899c3f": {
+      "ProjectGuid": "78394784-9339-4a64-8b33-d0a596899c3f",
+      "DisplayName": "RentToParty.Bll",
+      "ColorIndex": 4
+    },
+    "3c802837-3fb1-4a7d-a7fe-23b6f81692d8": {
+      "ProjectGuid": "3c802837-3fb1-4a7d-a7fe-23b6f81692d8",
+      "DisplayName": "RentToParty",
+      "ColorIndex": 5
+    }
+  },
+  "NextColorIndex": 6
+}
