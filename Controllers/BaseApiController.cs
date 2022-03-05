@@ -8,12 +8,8 @@ namespace RentToParty.Controllers
         protected readonly IMapper _mapper;
         protected const string _version = "webapi/v1";
 
-
-
-
         public BaseApiController(IMapper mapper)
         {
-
             _mapper = mapper;
         }
     }

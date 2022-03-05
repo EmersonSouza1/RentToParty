@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
 using RentToParty.Infra.Extensions;
+using RentToParty.Data;
 
 namespace RentToParty
 {
@@ -20,7 +21,7 @@ namespace RentToParty
         {
             services.RegisterWebAPIServices();
             services.AddControllers();
-            //services.AddDbContext<AppDbContext>();
+            services.AddDbContext<AppDbContext>();
 
         }
 

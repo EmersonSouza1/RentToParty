@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using RentToParty.Models;
+using RentToParty.Model;
 using RentToParty.Request;
+using RentToParty.Response;
 
 namespace RentToParty.Infra.AutoMapper
 {
@@ -8,9 +9,16 @@ namespace RentToParty.Infra.AutoMapper
     {
         public MappingProfile()
         {
-            CreateMap<PessoaInfo, PessoaRequest>();
+            CreateMap<PessoaRequest, PessoaModel >()
+                .ForMember(x => x.Id, opt => opt.Ignore())
+                .ReverseMap();
 
-            CreateMap<PessoaRequest, PessoaInfo>();
+            CreateMap<PessoaResponse, PessoaModel>()
+                  .ForMember(x => x.Id, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<PessoaResponse, PessoaRequest>().ReverseMap();
+
         }
     }
 }

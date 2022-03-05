@@ -1,36 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
 using RentToParty.Request;
-
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using RentToParty.Response;
 using RentToParty.Data;
 using RentToParty.Model;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 
 namespace RentToParty.Controllers
 {
     [ApiController]
-    [Route(_version + "/pessoa")]
+    [Route(template:  _version )]
     public class PessoaController : BaseApiController
     {
         
         #region Ctor
-        public PessoaController(IMapper mapper) : base(mapper)
-        {
-        }
+        public PessoaController(IMapper mapper) : base(mapper)    {        }
 
         #endregion
 
 
         #region API - Routes
 
-        [HttpGet("search")]
-        //[ProducesResponseType(typeof(PagedBaseResponse<PessoaResponse>), StatusCodes.Status200OK)]
-
+        [HttpGet( template: "search")]
+        [ProducesResponseType(typeof(PessoaResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> PersistAsync([FromQuery] PessoaRequest request)
         {
             if (!ModelState.IsValid)
@@ -38,20 +34,18 @@ namespace RentToParty.Controllers
                 return BadRequest(ModelState);
             }
 
-            
-
             return Ok(_mapper.Map<PessoaResponse>(request));
         }
 
         [HttpGet]
-        [Route(_version + "/pessoa")]
+        [Route(template: "pessoa")]
         public async Task<IActionResult> GetAsync([FromServices] AppDbContext context)
         {
             var pessoas = await context.Pessoas.AsNoTracking().ToListAsync();
 
-            PessoaRequest getpessoa = _mapper.Map<PessoaRequest>(pessoas);
+            List<PessoaResponse> getpessoas = _mapper.Map<List<PessoaResponse>>(pessoas);
 
-            return Ok(pessoas);
+            return getpessoas == null ? NotFound() : Ok(getpessoas);
         }
 
         [HttpGet]
@@ -60,6 +54,8 @@ namespace RentToParty.Controllers
                                                        [FromRoute] int id)
         {
             var pessoa = await context.Pessoas.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+
+           PessoaResponse getpessoa = _mapper.Map<PessoaResponse>(pessoa);
 
             return pessoa == null ? NotFound() : Ok(pessoa);
         }
@@ -71,7 +67,6 @@ namespace RentToParty.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest();
-
 
             var pessoa = _mapper.Map<PessoaModel>(model);
 
@@ -86,7 +81,6 @@ namespace RentToParty.Controllers
             {
                 return BadRequest(ex.Message);
             }
-
 
         }
         #endregion

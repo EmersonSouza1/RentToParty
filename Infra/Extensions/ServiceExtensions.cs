@@ -11,7 +11,6 @@ namespace RentToParty.Infra.Extensions
             
             services.AddAutoMapper(x => x.AddProfile(new MappingProfile()));
 
-
             return services;
         }
     }

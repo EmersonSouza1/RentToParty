@@ -15,13 +15,13 @@ namespace RentToParty.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.13");
 
-            modelBuilder.Entity("RentToParty.Models.Pessoa", b =>
+            modelBuilder.Entity("RentToParty.Model.PessoaModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("CPF")
+                    b.Property<string>("CPF_CNPJ")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
@@ -30,32 +30,12 @@ namespace RentToParty.Migrations
                     b.Property<string>("Nome")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Telefone")
+                    b.Property<long>("Telefone")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.ToTable("Pessoas");
-                });
-
-            modelBuilder.Entity("RentToParty.Models.Usuario", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("IdPessoa")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Nivel")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Senha")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Usuarios");
                 });
 #pragma warning restore 612, 618
         }

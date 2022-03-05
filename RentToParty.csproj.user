@@ -5,5 +5,11 @@
     <Compile Update="Data\AppDbContext.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Models\Enums\CaracteristicaEnum.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Request\LocacaoRequest.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>
