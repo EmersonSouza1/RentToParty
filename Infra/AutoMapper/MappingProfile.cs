@@ -19,6 +19,16 @@ namespace RentToParty.Infra.AutoMapper
 
             CreateMap<PessoaResponse, PessoaRequest>().ReverseMap();
 
+            CreateMap<ImovelRequest, ImovelModel>()
+                .ForMember(x => x.Id, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<ImovelResponse, ImovelModel>()
+                  .ForMember(x => x.Id, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<ImovelResponse, ImovelRequest>().ReverseMap();
+
         }
     }
 }

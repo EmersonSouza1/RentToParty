@@ -4,7 +4,6 @@ namespace RentToParty.Request
 {
     public class EnderecoRequest
     {
-        public int Id { get; set; }
         [Required]
         public string Rua { get; set; }
         [Required]

@@ -5,7 +5,6 @@ namespace RentToParty.Request
 {
     public class LocacaoRequest 
     {
-        public int Id { get; set; }
         [Required]
         public ImovelRequest Imovel { get; set; }
         [Required]

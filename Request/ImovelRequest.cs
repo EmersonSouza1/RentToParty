@@ -7,7 +7,6 @@ namespace RentToParty.Request
 
     public class ImovelRequest
     {
-        public int Id { get; set; }
         [Required]
         public PessoaRequest Proprietario { get; set; }
         [Required]
