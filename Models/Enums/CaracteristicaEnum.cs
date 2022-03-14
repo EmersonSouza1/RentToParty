@@ -1,19 +1,17 @@
-﻿
-
-using Nuke.Common.Tooling;
+﻿using Nuke.Common.Tooling;
 
 namespace RentToParty.Model.Enums
 {
     public enum CaracteristicaEnum
     {
-        [EnumValue("")]
+        [EnumValue("Não Definida")]
         None = 0,
 
-        [EnumValue("Salão")]
-        Salao = 1,
+        [EnumValue("Interna")]
+        Interna = 1,
 
-        [EnumValue("Area de Lazer")]
-        AreaLazer = 2,
+        [EnumValue("Externa")]
+        Externa = 2,
 
 
     }

@@ -25,18 +25,6 @@ namespace RentToParty.Controllers
 
         #region API - Routes
 
-        [HttpGet( template: "search")]
-        [ProducesResponseType(typeof(PessoaResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> PersistAsync([FromQuery] PessoaRequest request)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            return Ok(_mapper.Map<PessoaResponse>(request));
-        }
-
         [HttpGet]
         [Route(template: "pessoa")]
         public async Task<IActionResult> GetAsync([FromServices] AppDbContext context)
@@ -82,6 +70,42 @@ namespace RentToParty.Controllers
                 return BadRequest(ex.Message);
             }
 
+        }
+
+        [HttpPut(template: "pessoa")]
+        [ProducesResponseType(typeof(PessoaResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> PutAsync(
+                [FromServices] AppDbContext context, 
+                [FromQuery] PessoaPutRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var pessoa = await context.Pessoas.AsNoTracking().FirstOrDefaultAsync(x => x.CPF_CNPJ == request.CPF_CNPJ);
+                
+                if ( pessoa == null)
+                {
+                    return NotFound();
+                }
+
+                pessoa.Nome = string.IsNullOrEmpty(request.Nome) ? pessoa.Nome : request.Nome;
+
+                pessoa.Telefone = request.Telefone;
+
+                pessoa.Email = request.Email;
+
+                await context.SaveChangesAsync();
+
+                return Created($"v1/pessoa/{pessoa.Id}", pessoa);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         #endregion
     }

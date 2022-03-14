@@ -4,8 +4,14 @@ namespace RentToParty.Request
     /// <summary>
     /// Dados do Individuo.
     /// </summary>
-    public class PessoaPutRequest 
+    public class PessoaRequest 
     {
+        /// <summary>
+        /// Nome completo do individuo.
+        /// </summary>
+        [Required]
+        public string Nome { get; set; }
+
         /// <summary>
         /// CPF/CNPJ do Individuo.
         /// </summary>
@@ -13,15 +19,9 @@ namespace RentToParty.Request
         public string CPF_CNPJ { get; set; }
 
         /// <summary>
-        /// Nome completo do individuo.
-        /// </summary>
-
-        public string Nome { get; set; }
-
-        /// <summary>
         /// Email de Contato.
         /// </summary>
-
+        [Required]
         public string Email { get; set; }
 
         /// <summary>

@@ -1,16 +1,20 @@
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RentToParty.Model
 {
     /// <summary>
     /// Representação da tabela Pessoa no banco de dados.
     /// </summary>
+    [Table("Pessoa")]
     public class PessoaModel
     {
         /// <summary>
-        /// Identificador na tabela.
+        /// Identificador da pessoa na tabela.
         /// </summary>
-        public int Id { get; set; }
+        [Key()]
+        public int IdPessoa { get; set; }
 
         /// <summary>
         /// Nome completo do individuo.
@@ -23,6 +27,11 @@ namespace RentToParty.Model
         public string CPF_CNPJ { get; set; }
 
         /// <summary>
+        /// Data de Nascimento.
+        /// </summary>
+        public DateTime DtaNascimento { get; set; }
+
+        /// <summary>
         /// Email de Contato.
         /// </summary>
         public string Email { get; set; }
@@ -31,5 +40,18 @@ namespace RentToParty.Model
         /// Telefone de Contato.
         /// </summary>
         public long Telefone { get; set; }
+
+        /// <summary>
+        /// Identificador do endereco.
+        /// </summary>
+        [ForeignKey("Endereco")]
+        public int IdEndereco { get; set; }
+
+        /// <summary>
+        /// Endereço da pessoa.
+        /// </summary>
+        [ForeignKey("Endereco")]
+        public virtual EnderecoModel Endereco { get; set; }
+
     }
 }

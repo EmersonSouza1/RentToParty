@@ -17,6 +17,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Models\Enums\DiaDaSemanaEnum.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Models\Enums\StatusDispoEnum.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Response\LocacaoResponse.cs">
       <SubType>Code</SubType>
     </Compile>
