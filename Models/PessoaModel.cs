@@ -50,7 +50,6 @@ namespace RentToParty.Model
         /// <summary>
         /// Endereço da pessoa.
         /// </summary>
-        [ForeignKey("Endereco")]
         public virtual EnderecoModel Endereco { get; set; }
 
     }

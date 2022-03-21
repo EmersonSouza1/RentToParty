@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ViaCepConsumer.Models;
 using RentToParty.Model;
 using RentToParty.Request;
 using RentToParty.Response;
@@ -10,24 +11,28 @@ namespace RentToParty.Infra.AutoMapper
         public MappingProfile()
         {
             CreateMap<PessoaRequest, PessoaModel >()
-                .ForMember(x => x.Id, opt => opt.Ignore())
+                .ForMember(x => x.IdPessoa, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<PessoaResponse, PessoaModel>().ReverseMap();
+
+            CreateMap<EnderecoRequest, EnderecoModel>()
+                .ForMember(x => x.IdEndereco, opt => opt.Ignore())
                 .ReverseMap();
 
             CreateMap<PessoaResponse, PessoaModel>()
-                  .ForMember(x => x.Id, opt => opt.Ignore())
+                  .ForMember(x => x.IdPessoa, opt => opt.Ignore())
                 .ReverseMap();
 
-            CreateMap<PessoaResponse, PessoaRequest>().ReverseMap();
+            CreateMap<EnderecoRequest, EnderecoModel>().ReverseMap();
 
-            CreateMap<ImovelRequest, ImovelModel>()
-                .ForMember(x => x.Id, opt => opt.Ignore())
+            CreateMap<SearchResult, EnderecoModel>()
+                .ForMember(d => d.Logradouro, opt => opt.MapFrom( s => s.Rua))
+                .ForMember(d => d.Complemento, opt => opt.Ignore())
+                .ForMember(d => d.Cep, opt => opt.Ignore())
                 .ReverseMap();
 
-            CreateMap<ImovelResponse, ImovelModel>()
-                  .ForMember(x => x.Id, opt => opt.Ignore())
-                .ReverseMap();
-
-            CreateMap<ImovelResponse, ImovelRequest>().ReverseMap();
+            CreateMap<ImovelResponse, ImovelModel>().ReverseMap();
 
         }
     }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "yHFAzMcyuPeTK127veWYYqjm/LTab+rRqceifoYZJnvt4dKgHC+J6FUEZACsrFiOJCAYSlx7wmnzSS/zvMqqJA==",
+  "dgSpecHash": "+/nuptq4ScRoZEkpkcBnx3W6/RixbIbFb8Xhb1km/fAc551O+GD1O6ugH9Z6ESvGG9NcnOvB96bLcgkO9knqKw==",
   "success": true,
   "projectFilePath": "C:\\dev\\RentToParty\\RentToParty.csproj",
   "expectedPackageFiles": [
@@ -169,6 +169,7 @@
     "C:\\Users\\DELL\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
+    "C:\\Users\\DELL\\.nuget\\packages\\viacepconsumer\\1.3.0\\viacepconsumer.1.3.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\yamldotnet\\11.2.1\\yamldotnet.11.2.1.nupkg.sha512"
   ],
   "logs": []

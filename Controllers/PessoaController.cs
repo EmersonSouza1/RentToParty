@@ -26,7 +26,7 @@ namespace RentToParty.Controllers
         #region API - Routes
 
         [HttpGet]
-        [Route(template: "pessoa")]
+        [Route(template: "pessoas")]
         public async Task<IActionResult> GetAsync([FromServices] AppDbContext context)
         {
             var pessoas = await context.Pessoas.AsNoTracking().ToListAsync();
@@ -41,7 +41,7 @@ namespace RentToParty.Controllers
         public async Task<IActionResult> GetByIdAsync([FromServices] AppDbContext context,
                                                        [FromRoute] int id)
         {
-            var pessoa = await context.Pessoas.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            var pessoa = await context.Pessoas.AsNoTracking().FirstOrDefaultAsync(x => x.IdPessoa == id);
 
            PessoaResponse getpessoa = _mapper.Map<PessoaResponse>(pessoa);
 
@@ -53,8 +53,10 @@ namespace RentToParty.Controllers
                 [FromServices] AppDbContext context,
                 [FromBody] PessoaRequest model)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || (model.IdEndereco == 0 && model.Endereco == null))
                 return BadRequest();
+            
+            
 
             var pessoa = _mapper.Map<PessoaModel>(model);
 
@@ -63,7 +65,7 @@ namespace RentToParty.Controllers
                 await context.Pessoas.AddAsync(pessoa);
                 await context.SaveChangesAsync();
 
-                return Created($"v1/pessoa/{pessoa.Id}", pessoa);
+                return Created($"v1/pessoa/{pessoa.IdPessoa}", pessoa);
             }
             catch (Exception ex)
             {

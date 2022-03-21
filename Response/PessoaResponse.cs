@@ -8,6 +8,10 @@ namespace RentToParty.Response
     public class PessoaResponse
     {
         /// <summary>
+        /// Identificador da pessoa na tabela.
+        /// </summary>
+        public int IdPessoa { get; set; }
+        /// <summary>
         /// Nome completo do individuo.
         /// </summary>
         public string Nome { get; set; }
@@ -26,5 +30,10 @@ namespace RentToParty.Response
         /// Telefone de Contato.
         /// </summary>
         public long Telefone { get; set; }
+
+        /// <summary>
+        /// Endereço da pessoa.
+        /// </summary>
+        public EnderecoResponse Endereco { get; set; }
     }
 }

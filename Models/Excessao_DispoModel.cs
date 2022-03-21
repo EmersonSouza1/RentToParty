@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RentToParty.Model
@@ -12,6 +13,7 @@ namespace RentToParty.Model
         /// <summary>
         /// Identificador da excessao.
         /// </summary>
+        [Key()]
         public int IdExcessao { get; set; }
 
         /// <summary>

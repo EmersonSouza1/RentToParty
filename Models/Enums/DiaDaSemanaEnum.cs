@@ -4,26 +4,29 @@ namespace RentToParty.Model.Enums
 {
     public enum DiaDaSemanaEnum
     {
+        [EnumValue("")]
+        None = 0,
+
         [EnumValue("Domingo")]
-        Domingo = 0,
+        Domingo = 1,
 
         [EnumValue("Segunda-feira")]
-        Sengunda = 1,
+        Sengunda = 2,
 
         [EnumValue("Terca-feira")]
-        Terca = 2,
+        Terca = 3,
 
         [EnumValue("Quarta-feira")]
-        Quarta = 3,
+        Quarta = 4,
 
         [EnumValue("Quinta-feira")]
+        Quinta = 5,
 
-        Quinta = 4,
         [EnumValue("Sexta-feira")]
+        Sexta = 6,
 
-        Sexta = 5,
         [EnumValue("Sabado")]
-        Sabado = 6
+        Sabado = 7
 
     }
 }

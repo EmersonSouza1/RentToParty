@@ -8,6 +8,8 @@ namespace RentToParty.Data
     {
         public DbSet<PessoaModel> Pessoas { get; set; }
 
+        public DbSet<EnderecoModel> Enderecos { get; set; }
+
         public DbSet<ImovelModel> Imoveis { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

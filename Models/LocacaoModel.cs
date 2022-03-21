@@ -49,5 +49,10 @@ namespace RentToParty.Model
         /// </summa
         public DateTime DtaFimLocacao { get; set; }
 
+         /// <summary>
+        /// Valor da locação.
+        /// </summa
+        public Decimal Valor { get; set; }
+
     }
 }

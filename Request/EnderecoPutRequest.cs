@@ -5,18 +5,22 @@ namespace RentToParty.Request
     /// <summary>
     /// Endereço.
     /// </summa
-    public class EnderecoRequest
+    public class EnderecoPutRequest
     {
+        /// <summary>
+        /// Identificador do Endereço.
+        /// </summa
+        [Required(ErrorMessage = "O Identificador é obrigatorio!")]
+        public int IdEndereco { get; set; }
         /// <summary>
         /// Cep do endereço.
         /// </summa
-        [Required(ErrorMessage = "O Cep é obrigatorio!")]
+        
         public int Cep { get; set; }
 
         /// <summary>
         /// Número do local.
         /// </summa
-        [Required(ErrorMessage = "O Endereço é obrigatorio!")]
         public string Numero { get; set; }
 
         /// <summary>

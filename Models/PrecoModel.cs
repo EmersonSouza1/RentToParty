@@ -5,19 +5,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RentToParty.Model
 {
-    public class DisponibilidadeModel
+    public class PrecoModel
     {
         /// <summary>
-        /// Tabela de Disponibilidade do imovel.
+        /// Tabela de Preço do imovel.
         /// </summary>
-        [Table("Disponibilidade")]
+        [Table("Preco")]
         public class Excessao_DispoModel
         {
             /// <summary>
             /// Identificador da disponibilidade.
             /// </summary>
             [Key()]
-            public int IdDisponibilidade { get; set; }
+            public int IdPreco { get; set; }
 
             /// <summary>
             /// Identificador do Imovel.
@@ -31,24 +31,29 @@ namespace RentToParty.Model
             public virtual ImovelModel Imovel { get; set; }
 
             /// <summary>
-            /// Dia da Semana: 1 - Domingo, 2 - Segunda-feira, 3- Terça-feira, 4 - Quarta-feira, 5 - Quinta-feria, 6 - Sexta-feira, 7 - Sábado. 
+            /// Valor.
             /// </summary>
-            public DiaDaSemanaEnum DiaDaSemana { get; set; }
+            public Decimal Valor { get; set; }
+
+            /// <summary>
+            /// Data de Inicio do Valor.
+            /// </summa
+            public DateTime Dtainicio { get; set; }
+
+            /// <summary>
+            /// Data Final do Valor.
+            /// </summa
+            public DateTime DtaFim { get; set; }
 
             /// <summary>
             /// Status: 0 - Não disponivel, 1 - Disponivel, 2 - Negociar.
             /// </summary>
-            public StatusDispoEnum Status { get; set; }
+            public string Status { get; set; }
 
             /// <summary>
-            /// Hora de Inicio.
+            /// Dia da Semana: 0 - None, 1 - Domingo, 2 - Segunda-feira, 3- Terça-feira, 4 - Quarta-feira, 5 - Quinta-feria, 6 - Sexta-feira, 7 - Sábado.  
             /// </summary>
-            public DateTime HoraInicio { get; set; }
-
-            /// <summary>
-            /// Hora de Final.
-            /// </summary>
-            public DateTime HoraFinal { get; set; }
+            public DiaDaSemanaEnum DiaDaSemana { get; set; }
 
         }
     }

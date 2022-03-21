@@ -45,8 +45,5 @@ namespace RentToParty.Model
         /// </summa
         public string Cidade { get; set; }
 
-
-
-
     }
 }

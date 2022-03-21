@@ -1,15 +1,43 @@
 ﻿namespace RentToParty.Response
 {
+    /// <summary>
+    /// Endereço.
+    /// </summa
     public class EnderecoResponse
     {
-        public string Rua { get; set; }
+        /// <summary>
+        /// Identificador do Endereço.
+        /// </summa
+        public int IdEndereco { get; set; }
 
+        /// <summary>
+        /// Cep do endereço.
+        /// </summa
+        public int Cep { get; set; }
+
+        /// <summary>
+        /// Logradouro.
+        /// </summa
+        public string Logradouro { get; set; }
+
+        /// <summary>
+        /// Número do local.
+        /// </summa
         public string Numero { get; set; }
 
+        /// <summary>
+        /// Informação complementar ao endereço.
+        /// </summa
         public string Complemento { get; set; }
 
-        public BairroResponse Bairro { get; set; }
+        /// <summary>
+        /// Bairro.
+        /// </summa
+        public string Bairro { get; set; }
 
-        public CidadeResponse Cidade { get; set; }
+        /// <summary>
+        /// Cidade.
+        /// </summa
+        public string Cidade { get; set; }
     }
 }
