@@ -93,3 +93,5 @@ C:\dev\RentToParty\obj\Debug\ref\RentToParty.dll
 C:\dev\RentToParty\obj\Debug\RentToParty.pdb
 C:\dev\RentToParty\obj\Debug\RentToParty.genruntimeconfig.cache
 C:\dev\RentToParty\obj\Debug\RentToParty.csproj.AssemblyReference.cache
+C:\dev\RentToParty\bin\Debug\Flurl.dll
+C:\dev\RentToParty\bin\Debug\Flurl.Http.dll

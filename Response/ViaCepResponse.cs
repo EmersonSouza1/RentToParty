@@ -1,20 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Newtonsoft.Json;
 
-namespace RentToParty.Model
+namespace RentToParty.Response
 {
     /// <summary>
-    /// Tabela de Endereço.
+    /// Endereço.
     /// </summa
-    [Table("Endereco")]
-    public class EnderecoModel
+    public class ViaCepResponse
     {
-        /// <summary>
-        /// Identificador do Endereço
-        /// </summa
-        [Key()]
-        public int IdEndereco { get; set; }
-
         /// <summary>
         /// Cep do endereço.
         /// </summa
@@ -25,10 +17,6 @@ namespace RentToParty.Model
         /// </summa
         public string Logradouro { get; set; }
 
-        /// <summary>
-        /// Número do local.
-        /// </summa
-        public string Numero { get; set; }
 
         /// <summary>
         /// Informação complementar ao endereço.
@@ -43,7 +31,26 @@ namespace RentToParty.Model
         /// <summary>
         /// Cidade.
         /// </summa
+        [JsonProperty("localidade")]
         public string Cidade { get; set; }
 
+        /// <summary>
+        /// Estado.
+        /// </summa
+        [JsonProperty("uf")]
+        public string Estado { get; set; }
+
+        /// <summary>
+        /// Código do IBGE.
+        /// </summa
+        [JsonProperty("ibge")]
+        public string CodigoIBGE { get; set; }
+
+        /// <summary>
+        /// DDD da Região.
+        /// </summa
+        [JsonProperty("ddd")]
+        public string Cod_DDD { get; set; }
     }
+
 }

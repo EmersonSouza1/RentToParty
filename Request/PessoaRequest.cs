@@ -17,6 +17,7 @@ namespace RentToParty.Request
         /// CPF/CNPJ do Individuo.
         /// </summary>
         [Required(ErrorMessage = "O CPF/CNPJ é obrigatorio")]
+       // [RegularExpression(@"^\d{3}.\d{3}.\d{3}-$", ErrorMessage = "O CP deve deve seguir o seguinte padrão (DDD)98888-7777")]
         public string CPF_CNPJ { get; set; }
 
         /// <summary>
@@ -29,12 +30,14 @@ namespace RentToParty.Request
         /// Email de Contato.
         /// </summary>
         [Required(ErrorMessage = "O Email é obrigatorio!")]
+        [EmailAddress(ErrorMessage = "O Email informado não é valido!")]
         public string Email { get; set; }
 
         /// <summary>
         /// Telefone de Contato.
         /// </summary>
-        public long Telefone { get; set; }
+        [RegularExpression(@"^(\d{3})\d{5}-\d{4}$", ErrorMessage = "O telefone deve deve seguir o seguinte padrão (DDD)98888-7777")]
+        public string Telefone { get; set; }
 
         /// <summary>
         /// Identificador do endereco.

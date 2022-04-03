@@ -11,5 +11,8 @@
     <Compile Update="Request\LocacaoRequest.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Response\ViaCepResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

@@ -20,12 +20,14 @@ namespace RentToParty.Request
         /// <summary>
         /// Email de Contato.
         /// </summary>
+        [EmailAddress(ErrorMessage = "O Email não é valido!")]
         public string Email { get; set; }
 
         /// <summary>
         /// Telefone de Contato.
         /// </summary>
-        public long Telefone { get; set; }
+        [RegularExpression(@"^(\d{3})\d{5}-\d{4}$", ErrorMessage = "O telefone deve deve seguir o seguinte padrão (DDD)98888-7777")]
+        public string Telefone { get; set; }
 
         /// <summary>
         /// Identificador do endereco.

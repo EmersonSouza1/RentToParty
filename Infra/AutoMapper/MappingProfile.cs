@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ViaCepConsumer.Models;
+
 using RentToParty.Model;
 using RentToParty.Request;
 using RentToParty.Response;
@@ -14,22 +14,31 @@ namespace RentToParty.Infra.AutoMapper
                 .ForMember(x => x.IdPessoa, opt => opt.Ignore())
                 .ReverseMap();
 
-            CreateMap<PessoaResponse, PessoaModel>().ReverseMap();
+            CreateMap<PessoaPutRequest, PessoaModel>().ReverseMap();
+
+            CreateMap<PessoaResponse, PessoaModel>()
+                .ForMember(x => x.IdPessoa, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<ViaCepResponse, EnderecoModel>()
+                .ForMember(x => x.IdEndereco, opt => opt.Ignore())
+                .ForMember(x => x.Cep, opt => opt.Ignore())
+                .ForSourceMember(x => x.Estado, opt => opt.DoNotValidate())
+                .ForSourceMember(x => x.CodigoIBGE, opt => opt.DoNotValidate())
+                .ForSourceMember(x => x.Cod_DDD, opt => opt.DoNotValidate())
+                .ForSourceMember(x => x.Cep, opt => opt.DoNotValidate())
+                .ReverseMap();
 
             CreateMap<EnderecoRequest, EnderecoModel>()
                 .ForMember(x => x.IdEndereco, opt => opt.Ignore())
                 .ReverseMap();
 
-            CreateMap<PessoaResponse, PessoaModel>()
-                  .ForMember(x => x.IdPessoa, opt => opt.Ignore())
+            CreateMap<EnderecoResponse, EnderecoModel>()
+                .ForMember(x => x.IdEndereco, opt => opt.Ignore())
                 .ReverseMap();
 
-            CreateMap<EnderecoRequest, EnderecoModel>().ReverseMap();
-
-            CreateMap<SearchResult, EnderecoModel>()
-                .ForMember(d => d.Logradouro, opt => opt.MapFrom( s => s.Rua))
-                .ForMember(d => d.Complemento, opt => opt.Ignore())
-                .ForMember(d => d.Cep, opt => opt.Ignore())
+            CreateMap<EnderecoPutRequest, EnderecoModel>()
+                .ForMember(x => x.IdEndereco, opt => opt.Ignore())
                 .ReverseMap();
 
             CreateMap<ImovelResponse, ImovelModel>().ReverseMap();

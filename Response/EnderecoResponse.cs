@@ -1,4 +1,6 @@
-﻿namespace RentToParty.Response
+﻿using System.Text.Json.Serialization;
+
+namespace RentToParty.Response
 {
     /// <summary>
     /// Endereço.
@@ -13,7 +15,7 @@
         /// <summary>
         /// Cep do endereço.
         /// </summa
-        public int Cep { get; set; }
+        public string Cep { get; set; }
 
         /// <summary>
         /// Logradouro.
@@ -28,7 +30,8 @@
         /// <summary>
         /// Informação complementar ao endereço.
         /// </summa
-        public string Complemento { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? Complemento { get; set; }
 
         /// <summary>
         /// Bairro.

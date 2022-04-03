@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Flurl;
+using Flurl.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RentToParty.Request;
 using System;
@@ -9,8 +11,11 @@ using RentToParty.Data;
 using RentToParty.Model;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
-using ViaCepConsumer;
+
 using System.Threading;
+using System.Net;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace RentToParty.Controllers
 {
@@ -18,17 +23,17 @@ namespace RentToParty.Controllers
     [Route(template:  _version )]
     public class EnderecoController : BaseApiController
     {
-        private CancellationTokenSource _source;
-        private CancellationToken _token;
-        private ViaCepClient _cepConsumer;
+
+
+        private readonly string _baseUrl;
 
         #region Ctor
         public EnderecoController(IMapper mapper) : base(mapper)    {
 
-             _source = new CancellationTokenSource();
-             _token = _source.Token;
-             _cepConsumer = new ViaCepClient();
-    }
+
+
+            _baseUrl = "https://viacep.com.br/ws/";
+        }
 
         #endregion
 
@@ -55,7 +60,7 @@ namespace RentToParty.Controllers
 
             var getpessoa = _mapper.Map<EnderecoResponse>(endereco);
 
-            return endereco == null ? NotFound() : Ok(endereco);
+            return endereco == null ? NotFound() : Ok(getpessoa);
         }
 
         [HttpPost(template: "endereco")]
@@ -65,20 +70,14 @@ namespace RentToParty.Controllers
                 [FromBody] EnderecoRequest model)
         {
             if (!ModelState.IsValid)
-                return BadRequest();
+                return BadRequest(ModelState);
 
             var enderecobusc = new EnderecoModel();
-            if (model.Cep > 0)
-            {
 
-                var result = _cepConsumer.SearchAsync(model.Cep.ToString(), _token);
+            enderecobusc = await BuscaCepAsync(model.Cep);
 
-                if (_token.IsCancellationRequested)
-                    throw new BusinessException($"Falha ao salvar atributo {model.Cep}");
-                if (result != null)
-                    enderecobusc = _mapper.Map<EnderecoModel>(result.Result);
-                
-            }
+            if (string.IsNullOrEmpty( enderecobusc.Logradouro) )
+                return BadRequest("Cep invalido ou não encontrado");
 
             var endereco = _mapper.Map<EnderecoModel>(model);
 
@@ -103,34 +102,38 @@ namespace RentToParty.Controllers
         [ProducesResponseType(typeof(EnderecoResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> PutAsync(
                 [FromServices] AppDbContext context, 
-                [FromQuery] EnderecoPutRequest request)
+                [FromBody] EnderecoPutRequest request)
         {
             if (!ModelState.IsValid)
-               return BadRequest(ModelState);
-            
+                return BadRequest(ModelState);
 
             try
             {
-                var endereco = await context.Enderecos.AsNoTracking().FirstOrDefaultAsync(x => x.IdEndereco == request.IdEndereco);
-                
+                var endereco = await context.Enderecos.AsNoTracking().FirstOrDefaultAsync(x => x.IdEndereco == request.Id);
+
                 if ( endereco == null)
-                    return NotFound();
+                    return NotFound(request);
 
+                if (string.IsNullOrEmpty(request.Cep) && string.IsNullOrEmpty(request.Numero) &&
+                    string.Compare(request.Complemento, endereco.Complemento) == 0)
+                    return BadRequest(new ErroResponse("Nenhuma informação para ser alterada!"));
 
+                var enderecobusc = new EnderecoModel();
 
-                if (request.Cep != endereco.Cep)
+                if (request.Cep != endereco.Cep.ToString())
                 {
-                    
-                    var result = _cepConsumer.SearchAsync(request.Cep.ToString(), _token);
+                    enderecobusc = await BuscaCepAsync(request.Cep);
 
-                    //if (token.IsCancellationRequested)
-                      //  throw Excep
-                    if (result != null)
-                       endereco = _mapper.Map<EnderecoModel>(result.Result);
+                    if (string.IsNullOrEmpty(enderecobusc.Logradouro))
+                        return BadRequest("Cep invalido ou não encontrado");
 
+                    endereco.Logradouro = enderecobusc.Logradouro;
+                    endereco.Cidade = enderecobusc.Cidade;
+                    endereco.Bairro = enderecobusc.Bairro;
                 }
-                endereco.Numero = request.Numero;
-                endereco.Complemento = request.Complemento;
+
+                endereco.Numero = request.Numero != endereco.Numero ? request.Numero : endereco.Numero;
+                endereco.Complemento = request.Complemento != endereco.Complemento ? request.Complemento : endereco.Complemento;
 
                 await context.SaveChangesAsync();
 
@@ -142,7 +145,33 @@ namespace RentToParty.Controllers
             }
         }
 
-        private 
+
         #endregion
+
+        private async Task<EnderecoModel> BuscaCepAsync(string cep)
+        {
+            EnderecoModel enderecobusc = new EnderecoModel();
+            try
+            {
+                var response = await _baseUrl
+                .AppendPathSegment($"{cep}/json/")
+                .GetAsync();
+
+                if (response.StatusCode != 200)
+                    return enderecobusc;
+
+                var ret = JsonConvert.DeserializeObject<ViaCepResponse>(await response.ResponseMessage.Content.ReadAsStringAsync());
+
+                enderecobusc = _mapper.Map<EnderecoModel>(ret);
+
+            }
+            catch 
+            {
+                throw new BusinessException("Falha na consulta ao CEP externo.");
+            }
+            
+            return enderecobusc;
+        }
+
     }
 }

@@ -39,7 +39,7 @@ namespace RentToParty.Model
         /// <summary>
         /// Telefone de Contato.
         /// </summary>
-        public long Telefone { get; set; }
+        public string Telefone { get; set; }
 
         /// <summary>
         /// Identificador do endereco.

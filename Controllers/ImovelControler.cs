@@ -41,7 +41,7 @@ namespace RentToParty.Controllers
         public async Task<IActionResult> GetByIdAsync([FromServices] AppDbContext context,
                                                        [FromRoute] int id)
         {
-            var imevel = await context.Imoveis.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            var imevel = await context.Imoveis.AsNoTracking().FirstOrDefaultAsync(x => x.IdIMovel == id);
 
             ImovelResponse getpessoa = _mapper.Map<ImovelResponse>(imevel);
 
@@ -63,7 +63,7 @@ namespace RentToParty.Controllers
                 await context.Imoveis.AddAsync(imovel);
                 await context.SaveChangesAsync();
 
-                return Created($"v1/imovel/{imovel.Id}", imovel);
+                return Created($"v1/imovel/{imovel.IdIMovel}", imovel);
             }
             catch (Exception ex)
             {

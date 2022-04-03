@@ -53,10 +53,16 @@ namespace RentToParty.Controllers
                 [FromServices] AppDbContext context,
                 [FromBody] PessoaRequest model)
         {
-            if (!ModelState.IsValid || (model.IdEndereco == 0 && model.Endereco == null))
-                return BadRequest();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            if (model.IdEndereco == 0 && model.Endereco == null)
+                return BadRequest(new ErroResponse("Nenhum Endereço informado."));
             
-            
+            if (model.IdEndereco > 0)
+            {
+                var endereco = Created($"v1/endereco/{model.IdEndereco}", model);
+            }
+                
 
             var pessoa = _mapper.Map<PessoaModel>(model);
 
@@ -102,7 +108,7 @@ namespace RentToParty.Controllers
 
                 await context.SaveChangesAsync();
 
-                return Created($"v1/pessoa/{pessoa.Id}", pessoa);
+                return Created($"v1/pessoa/{pessoa.IdPessoa}", pessoa);
             }
             catch (Exception ex)
             {
