@@ -52,6 +52,8 @@ namespace RentToParty.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(EnderecoResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Route(template: "endereco/{id}")]
         public async Task<IActionResult> GetByIdAsync([FromServices] AppDbContext context,
                                                        [FromRoute] int id)

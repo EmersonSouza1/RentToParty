@@ -96,8 +96,8 @@ namespace RentToParty.Migrations
                     b.Property<string>("Nome")
                         .HasColumnType("TEXT");
 
-                    b.Property<long>("Telefone")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Telefone")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("IdPessoa");
 

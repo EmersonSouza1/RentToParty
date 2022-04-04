@@ -17,14 +17,15 @@ namespace RentToParty.Request
         /// CPF/CNPJ do Individuo.
         /// </summary>
         [Required(ErrorMessage = "O CPF/CNPJ é obrigatorio")]
-       // [RegularExpression(@"^\d{3}.\d{3}.\d{3}-$", ErrorMessage = "O CP deve deve seguir o seguinte padrão (DDD)98888-7777")]
+        [StringLength( 14, ErrorMessage = "O tamanho do CPF_CNPJ deve ser entre 11 e 14 digitos", MinimumLength = 11)]
+        [RegularExpression(@"^\d{11,14}$", ErrorMessage = "O CPF_CNPJ deve deve conter apenas números.")]
         public string CPF_CNPJ { get; set; }
 
         /// <summary>
         /// Data de Nascimento.
         /// </summary>
         [Required(ErrorMessage = "A Data de Nascimento é obrigatorio!")]
-        public DateTime DtaNascimento { get; set; }
+        public DateTime? DtaNascimento { get; set; }
 
         /// <summary>
         /// Email de Contato.

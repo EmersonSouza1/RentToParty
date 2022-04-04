@@ -41,6 +41,10 @@ namespace RentToParty.Infra.AutoMapper
                 .ForMember(x => x.IdEndereco, opt => opt.Ignore())
                 .ReverseMap();
 
+            CreateMap<EnderecoResponse, EnderecoRequest>()
+
+                .ReverseMap();
+
             CreateMap<ImovelResponse, ImovelModel>().ReverseMap();
 
         }

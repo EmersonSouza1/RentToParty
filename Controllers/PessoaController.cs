@@ -16,9 +16,14 @@ namespace RentToParty.Controllers
     [Route(template:  _version )]
     public class PessoaController : BaseApiController
     {
-        
+        private EnderecoController _enderecoController;
         #region Ctor
-        public PessoaController(IMapper mapper) : base(mapper)    {        }
+        public PessoaController(IMapper mapper) : base(mapper)    {
+
+            _enderecoController = new EnderecoController(mapper);
+        }
+
+        
 
         #endregion
 
@@ -45,7 +50,7 @@ namespace RentToParty.Controllers
 
            PessoaResponse getpessoa = _mapper.Map<PessoaResponse>(pessoa);
 
-            return pessoa == null ? NotFound() : Ok(pessoa);
+            return pessoa == null ? NotFound() : Ok(getpessoa);
         }
 
         [HttpPost(template: "pessoa")]
@@ -60,8 +65,52 @@ namespace RentToParty.Controllers
             
             if (model.IdEndereco > 0)
             {
-                var endereco = Created($"v1/endereco/{model.IdEndereco}", model);
+                try
+                {
+                    var retorno = _enderecoController.GetByIdAsync(context, model.IdEndereco);
+                                       
+                    var result = retorno.Result as OkObjectResult;
+
+                    if (result == null)
+                        return BadRequest("IdEndeco não encontrado.");
+
+                    model.Endereco = null;
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest("Falha na busca do Endereco: \n" + ex.Message);
+                }                   
             }
+            else if (model.Endereco != null)
+            {
+                try
+                {
+                    var retorno = _enderecoController.PostAsync(context, model.Endereco);
+
+                    var result = retorno.Result as CreatedResult;
+
+                    if (result == null)
+                    {
+                        var badresp = retorno.Result as BadRequestObjectResult;
+
+                        string msg = "Endereço invalido: \n";
+
+                        if (badresp != null)
+                            msg += badresp.Value.ToString();
+
+                        return BadRequest(msg);
+                    }
+                    
+                    var endrespo = _mapper.Map<EnderecoResponse>(result.Value);
+
+                    model.IdEndereco =  endrespo.IdEndereco;
+
+            }
+                catch (Exception ex)
+            {
+                return BadRequest("Falha no inserção do Endereco: \n" + ex.Message);
+            }
+        }
                 
 
             var pessoa = _mapper.Map<PessoaModel>(model);

@@ -29,7 +29,7 @@ namespace RentToParty.Response
         /// <summary>
         /// Telefone de Contato.
         /// </summary>
-        public long Telefone { get; set; }
+        public string Telefone { get; set; }
 
         /// <summary>
         /// Endereço da pessoa.
