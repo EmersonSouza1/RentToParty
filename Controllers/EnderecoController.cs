@@ -58,11 +58,9 @@ namespace RentToParty.Controllers
         public async Task<IActionResult> GetByIdAsync([FromServices] AppDbContext context,
                                                        [FromRoute] int id)
         {
-            var endereco = await context.Enderecos.AsNoTracking().FirstOrDefaultAsync(x => x.IdEndereco == id);
+            var getpessoa = BuscaEndereco(id, context);
 
-            var getpessoa = _mapper.Map<EnderecoResponse>(endereco);
-
-            return endereco == null ? NotFound() : Ok(getpessoa);
+            return getpessoa == null ? NotFound() : Ok(getpessoa);
         }
 
         [HttpPost(template: "endereco")]
@@ -174,6 +172,15 @@ namespace RentToParty.Controllers
             
             return enderecobusc;
         }
+
+        public async Task<EnderecoResponse> BuscaEndereco(int id, AppDbContext context)
+        {
+            var endereco = await context.Enderecos.AsNoTracking().FirstOrDefaultAsync(x => x.IdEndereco == id);
+
+            var getendereco = _mapper.Map<EnderecoResponse>(endereco);
+
+            return getendereco;
+        }  
 
     }
 }

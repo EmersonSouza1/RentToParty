@@ -47,6 +47,10 @@ namespace RentToParty.Infra.AutoMapper
 
             CreateMap<ImovelResponse, ImovelModel>().ReverseMap();
 
+            CreateMap<ImovelRequest, ImovelModel>().ReverseMap();
+
+            CreateMap<ImovelPutRequest, ImovelModel>().ReverseMap();
+
         }
     }
 }

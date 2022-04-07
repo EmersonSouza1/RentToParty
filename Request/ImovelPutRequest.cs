@@ -1,47 +1,33 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RentToParty.Model
+namespace RentToParty.Request
 {
     /// <summary>
-    /// Tabela de Imovel.
+    /// Dados do Imovel.
     /// </summary>
-    [Table("Imovel")]
-    public class ImovelModel
+    public class ImovelPutRequest
     {
         /// <summary>
-        /// Identificador do imovel.
+        /// Identificador do Imovel.
         /// </summary>
-        [Key()]
+        [Required(ErrorMessage = "O Identificador do imovel é obrigatorio!")]
         public int IdIMovel { get; set; }
 
         /// <summary>
         /// Descrição do Imovel.
         /// </summary>
+        [StringLength(14, ErrorMessage = "A Descrição deve conter até 14 caracteres!")]
         public string Descricao { get; set; }
 
         /// <summary>
         /// Identificador do proprietario.
         /// </summary>
-        [ForeignKey("Pessoa")]
         public int IdProprietario { get; set; }
-
-        /// <summary>
-        /// Proprietario.
-        /// </summary>
-        public virtual PessoaModel Proprietario { get; set; }
 
         /// <summary>
         /// Identificador do endereço.
         /// </summary>
-        [ForeignKey("Endereco")]
         public int IdEndereco { get; set; }
-
-        /// <summary>
-        /// Endereço.
-        /// </summary>
-        public virtual EnderecoModel endereco { get; set; }
-
 
     }
 }

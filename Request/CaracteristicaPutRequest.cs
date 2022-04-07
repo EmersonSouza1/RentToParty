@@ -2,7 +2,7 @@
 
 namespace RentToParty.Request
 {
-    public class CaracteristicaRequest
+    public class CaracteristicaPutRequest
     {
         [Required]
         public int Tipo { get; set; }

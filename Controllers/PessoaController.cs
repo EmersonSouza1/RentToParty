@@ -56,71 +56,25 @@ namespace RentToParty.Controllers
         [HttpPost(template: "pessoa")]
         public async Task<IActionResult> PostAsync(
                 [FromServices] AppDbContext context,
-                [FromBody] PessoaRequest model)
+                [FromBody] PessoaRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            if (model.IdEndereco == 0 && model.Endereco == null)
+            if (request.IdEndereco == 0 && request.Endereco == null)
                 return BadRequest(new ErroResponse("Nenhum Endereço informado."));
+
+            var model = _mapper.Map<PessoaModel>(request);
+            var msg = AplicaMudancaEndereco(model, context);
             
-            if (model.IdEndereco > 0)
-            {
-                try
-                {
-                    var retorno = _enderecoController.GetByIdAsync(context, model.IdEndereco);
-                                       
-                    var result = retorno.Result as OkObjectResult;
-
-                    if (result == null)
-                        return BadRequest("IdEndeco não encontrado.");
-
-                    model.Endereco = null;
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest("Falha na busca do Endereco: \n" + ex.Message);
-                }                   
-            }
-            else if (model.Endereco != null)
-            {
-                try
-                {
-                    var retorno = _enderecoController.PostAsync(context, model.Endereco);
-
-                    var result = retorno.Result as CreatedResult;
-
-                    if (result == null)
-                    {
-                        var badresp = retorno.Result as BadRequestObjectResult;
-
-                        string msg = "Endereço invalido: \n";
-
-                        if (badresp != null)
-                            msg += badresp.Value.ToString();
-
-                        return BadRequest(msg);
-                    }
-                    
-                    var endrespo = _mapper.Map<EnderecoResponse>(result.Value);
-
-                    model.IdEndereco =  endrespo.IdEndereco;
-
-            }
-                catch (Exception ex)
-            {
-                return BadRequest("Falha no inserção do Endereco: \n" + ex.Message);
-            }
-        }
-                
-
-            var pessoa = _mapper.Map<PessoaModel>(model);
+            if (!string.IsNullOrEmpty(msg))
+                BadRequest(msg);
 
             try
             {
-                await context.Pessoas.AddAsync(pessoa);
+                await context.Pessoas.AddAsync(model);
                 await context.SaveChangesAsync();
 
-                return Created($"v1/pessoa/{pessoa.IdPessoa}", pessoa);
+                return Created($"v1/pessoa/{model.IdPessoa}", model);
             }
             catch (Exception ex)
             {
@@ -136,24 +90,35 @@ namespace RentToParty.Controllers
                 [FromQuery] PessoaPutRequest request)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             try
             {
                 var pessoa = await context.Pessoas.AsNoTracking().FirstOrDefaultAsync(x => x.CPF_CNPJ == request.CPF_CNPJ);
                 
                 if ( pessoa == null)
-                {
-                    return NotFound();
-                }
+                 return NotFound();
+
+                if ( string.IsNullOrEmpty(request.Nome) && string.Compare(request.Telefone, pessoa.Telefone) == 0 && string.Compare(request.Email, pessoa.Email) == 0 &&
+                     request.IdEndereco <= 0 && request.Endereco == null )
+                    return BadRequest(new ErroResponse("Nenhuma informação para ser alterada!"));
 
                 pessoa.Nome = string.IsNullOrEmpty(request.Nome) ? pessoa.Nome : request.Nome;
 
-                pessoa.Telefone = request.Telefone;
+                pessoa.Telefone = string.Compare(request.Telefone, pessoa.Telefone) == 0 ? pessoa.Telefone : request.Telefone;
 
-                pessoa.Email = request.Email;
+                pessoa.Email = string.Compare(request.Email, pessoa.Email) == 0 ? pessoa.Email : request.Email;
+
+                if (request.IdEndereco > 0 || request.Endereco != null)
+                {
+                    pessoa.IdEndereco = request.IdEndereco;
+                    pessoa.Endereco = _mapper.Map <EnderecoModel>(request.Endereco);
+
+                    var msg = AplicaMudancaEndereco(pessoa, context);
+
+                    if (!string.IsNullOrEmpty(msg))
+                        BadRequest(msg);
+                }
 
                 await context.SaveChangesAsync();
 
@@ -163,6 +128,58 @@ namespace RentToParty.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        private string AplicaMudancaEndereco(PessoaModel pessoa, AppDbContext context)
+        {
+            if (pessoa.IdEndereco > 0)
+            {
+                var result = _enderecoController.BuscaEndereco(pessoa.IdEndereco, context);
+                if (result == null || result.Id <= 0)
+                    return "Identificador do Endereço não encontrado!";
+            }
+            else if (pessoa.Endereco != null)
+            {
+                try
+                {
+                    var retorno = _enderecoController.PostAsync(context, _mapper.Map<EnderecoRequest>(pessoa.Endereco));
+
+                    var result = retorno.Result as CreatedResult;
+
+                    if (result == null)
+                    {
+                        var badresp = retorno.Result as BadRequestObjectResult;
+
+                        string msg = "Endereço invalido: \n";
+
+                        if (badresp != null)
+                            msg += badresp.Value.ToString();
+
+                        return msg;
+                    }
+
+                    var endrespo = _mapper.Map<EnderecoResponse>(result.Value);
+
+                    pessoa.IdEndereco = endrespo.IdEndereco;
+
+                }
+                catch (Exception ex)
+                {
+                    return "Falha no inserção do Endereco: \n" + ex.Message;
+                }
+            }
+
+            return null;
+
+        }
+
+        public async Task<PessoaResponse> BuscaPessoa(int id, AppDbContext context)
+        {
+            var pessoa = await context.Pessoas.AsNoTracking().FirstOrDefaultAsync(x => x.IdPessoa == id);
+
+            var getpessoa = _mapper.Map<PessoaResponse>(pessoa);
+
+            return getpessoa;
         }
         #endregion
     }

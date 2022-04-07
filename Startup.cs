@@ -34,6 +34,8 @@ namespace RentToParty
 
             app.UseRouting();
 
+
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

@@ -9,6 +9,15 @@ namespace RentToParty.Response
     public class ImovelResponse
     {
         /// <summary>
+        /// Identificador do imovel.
+        /// </summary>
+        public int IdIMovel { get; set; }
+        
+        /// <summary>
+        /// Descrição do Imovel.
+        /// </summary>
+        public string Descricao { get; set; }
+        /// <summary>
         /// Proprietario do Imovel.
         /// </summary>
         public PessoaResponse Proprietario { get; set; }
@@ -18,9 +27,5 @@ namespace RentToParty.Response
         /// </summary>
         public EnderecoResponse Endereco { get; set; }
 
-        /// <summary>
-        /// Caracteristicas do Imovel.
-        /// </summary>
-        public List<CaracteristicaResponse> Caracteristicas { get; set; }
     }
 }
