@@ -67,19 +67,17 @@ namespace RentToParty.Controllers
         [ProducesResponseType(typeof(EnderecoResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> PostAsync(
                 [FromServices] AppDbContext context,
-                [FromBody] EnderecoRequest model)
+                [FromBody] EnderecoRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var enderecobusc = new EnderecoModel();
-
-            enderecobusc = await BuscaCepAsync(model.Cep);
+            EnderecoModel enderecobusc = await BuscaCepAsync(request.Cep);
 
             if (string.IsNullOrEmpty( enderecobusc.Logradouro) )
                 return BadRequest("Cep invalido ou não encontrado");
 
-            var endereco = _mapper.Map<EnderecoModel>(model);
+            var endereco = _mapper.Map<EnderecoModel>(request);
 
             endereco.Logradouro = enderecobusc.Logradouro;
             endereco.Bairro = enderecobusc.Bairro;
@@ -109,7 +107,7 @@ namespace RentToParty.Controllers
 
             try
             {
-                var endereco = await context.Enderecos.AsNoTracking().FirstOrDefaultAsync(x => x.IdEndereco == request.Id);
+                var endereco = await context.Enderecos.AsNoTracking().FirstOrDefaultAsync(x => x.IdEndereco == request.IdEndereco);
 
                 if ( endereco == null)
                     return NotFound(request);

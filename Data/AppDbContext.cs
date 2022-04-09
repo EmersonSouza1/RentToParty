@@ -12,6 +12,10 @@ namespace RentToParty.Data
 
         public DbSet<ImovelModel> Imoveis { get; set; }
 
+        public DbSet<LocacaoModel> Locacoes { get; set; }
+
+        public DbSet<DisponibilidadeModel> Disponibilidade { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
           => optionsBuilder.UseSqlite("DataSource=app.db;Cache=Shared");
         

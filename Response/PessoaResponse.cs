@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace RentToParty.Response
 {
@@ -10,6 +11,7 @@ namespace RentToParty.Response
         /// <summary>
         /// Identificador da pessoa na tabela.
         /// </summary>
+        [JsonProperty("Id")]
         public int IdPessoa { get; set; }
         /// <summary>
         /// Nome completo do individuo.
@@ -34,6 +36,6 @@ namespace RentToParty.Response
         /// <summary>
         /// Endereço da pessoa.
         /// </summary>
-        public EnderecoResponse Endereco { get; set; }
+        public EnderecoSimplesResponse Endereco { get; set; }
     }
 }

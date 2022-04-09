@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace RentToParty.Request
 {
@@ -11,7 +12,8 @@ namespace RentToParty.Request
         /// Identificador do Endereço.
         /// </summa
         [Required(ErrorMessage = "O Identificador é obrigatorio!")]
-        public int Id { get; set; }
+        [JsonPropertyName("Id")]
+        public int IdEndereco { get; set; }
 
         /// Cep do endereço, exp: 01001000.
         /// </summa

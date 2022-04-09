@@ -10,6 +10,7 @@ namespace RentToParty.Response
         /// <summary>
         /// Identificador do Endereço.
         /// </summa
+        [JsonPropertyName("Id")]
         public int IdEndereco { get; set; }
 
         /// <summary>

@@ -7,19 +7,13 @@ namespace RentToParty.Request
     /// <summary>
     /// Locação.
     /// </summary>
-    public class LocacaoRequest 
+    public class LocacaoPutRequest 
     {
         /// <summary>
-        /// Identificador do Imovel.
+        /// Identificador da Locação.
         /// </summary>
-        [Required(ErrorMessage = "O Identificador do imovel é obrigatorio!")]
-        public int IdImovel { get; set; }
-
-        /// <summary>
-        /// Identificador do locatario.
-        /// </summary>
-        [Required(ErrorMessage = "O Identificador do locatario é obrigatorio!")]
-        public int IdLocatario { get; set; }
+        [Required(ErrorMessage = "O Identificador da locação é obrigatorio!")]
+        public int IdLocacao { get; set; }
 
         /// <summary>
         /// Data de Inicio da Locação.

@@ -26,6 +26,12 @@
     <Compile Update="Models\Enums\StatusDispoEnum.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Request\LocacaoPutRequest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Response\LocacaoSimplesResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Response\LocacaoResponse.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -24,7 +24,6 @@ namespace RentToParty.Controllers
         }
 
         
-
         #endregion
 
 

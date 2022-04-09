@@ -14,14 +14,14 @@ namespace RentToParty.Controllers
 {
     [ApiController]
     [Route(template:  _version )]
-    public class ImovelController : BaseApiController
+    public class LocacaoController : BaseApiController
     {
         private EnderecoController _enderecoController;
 
         private PessoaController _pessoaController;
 
         #region Ctor
-        public ImovelController(IMapper mapper) : base(mapper)    {
+        public LocacaoController(IMapper mapper) : base(mapper)    {
             _enderecoController = new EnderecoController(mapper);
             _pessoaController = new PessoaController(mapper);
         }
@@ -32,54 +32,40 @@ namespace RentToParty.Controllers
         #region API - Routes
 
         [HttpGet]
-        [Route(template: "imoveis")]
+        [Route(template: "locacoes")]
         public async Task<IActionResult> GetAsync([FromServices] AppDbContext context)
         {
-            var imevel = await context.Imoveis.AsNoTracking().ToListAsync();
+            var locacoes = await context.Locacoes.AsNoTracking().ToListAsync();
 
-            List<ImovelResponse> getimoveis = _mapper.Map<List<ImovelResponse>>(imevel);
+            var getlocacoes = _mapper.Map<List<LocacaoResponse>>(locacoes);
 
-            return getimoveis == null ? NotFound() : Ok(getimoveis);
+            return locacoes == null ? NotFound() : Ok(getlocacoes);
         }
 
         [HttpGet]
-        [Route(template: "imovel/{id}")]
+        [Route(template: "locacao/{id}")]
         public async Task<IActionResult> GetByIdAsync([FromServices] AppDbContext context,
                                                        [FromRoute] int id)
         {
-            var imovel = await context.Imoveis.AsNoTracking().FirstOrDefaultAsync(x => x.IdIMovel == id);
+            var locacao = await context.Locacoes.AsNoTracking().FirstOrDefaultAsync(x => x.IdLocacao == id);
 
-            ImovelResponse getimovel = _mapper.Map<ImovelResponse>(imovel);
+            ImovelResponse getlocacao = _mapper.Map<ImovelResponse>(locacao);
 
-            return imovel == null ? NotFound() : Ok(getimovel);
+            return locacao == null ? NotFound() : Ok(getlocacao);
         }
 
-        [HttpPost(template: "imovel")]
+        [HttpPost(template: "locacao")]
         public async Task<IActionResult> PostAsync(
                 [FromServices] AppDbContext context,
-                [FromBody] ImovelRequest request)
+                [FromBody] LocacaoRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var imovel = _mapper.Map<ImovelModel>(request);
+            var locacao = _mapper.Map<LocacaoModel>(request);
 
-            try
-            {
-                var msg = VerificaSeExiste(imovel, context);
-
-                if (!string.IsNullOrEmpty(msg))
-                    return BadRequest(msg);
-
-                await context.Imoveis.AddAsync(imovel);
-                await context.SaveChangesAsync();
-
-                return Created($"v1/imovel/{imovel.IdIMovel}", imovel);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return BadRequest("Não finalizado");
+            
 
         }
 
