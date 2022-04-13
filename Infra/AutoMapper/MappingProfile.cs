@@ -67,14 +67,20 @@ namespace RentToParty.Infra.AutoMapper
 
             CreateMap<ImovelResponse, ImovelModel>().ReverseMap();
 
-            CreateMap<ImovelRequest, ImovelModel>().ReverseMap();
+            CreateMap<ImovelRequest, ImovelModel>()
+                .ForMember(x => x.IdEndereco, opt => opt.Ignore())
+                .ReverseMap();
 
-            CreateMap<ImovelPutRequest, ImovelModel>().ReverseMap();
+            CreateMap<ImovelPutRequest, ImovelModel>()
+                .ForMember(x => x.IdIMovel, opt => opt.Ignore())
+                .ForMember(x => x.IdProprietario, opt => opt.Ignore())
+                .ReverseMap();
 
+            CreateMap<ImovelSimplesResponse, ImovelModel>().ReverseMap();
             #endregion
 
             #region Locacao
-             
+
             #endregion
 
         }

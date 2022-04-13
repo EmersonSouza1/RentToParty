@@ -16,13 +16,13 @@ namespace RentToParty.Controllers
     [Route(template:  _version )]
     public class LocacaoController : BaseApiController
     {
-        private EnderecoController _enderecoController;
+        private ImovelController _imovelcontroller;
 
         private PessoaController _pessoaController;
 
         #region Ctor
         public LocacaoController(IMapper mapper) : base(mapper)    {
-            _enderecoController = new EnderecoController(mapper);
+            _imovelcontroller = new ImovelController(mapper);
             _pessoaController = new PessoaController(mapper);
         }
 
@@ -64,58 +64,77 @@ namespace RentToParty.Controllers
 
             var locacao = _mapper.Map<LocacaoModel>(request);
 
-            return BadRequest("Não finalizado");
-            
+            try
+            {
+                var msg = VerificaSeExiste(locacao, context);
+
+                if (!string.IsNullOrEmpty(msg))
+                    return BadRequest(msg);
+
+                await context.Locacoes.AddAsync(locacao);
+                await context.SaveChangesAsync();
+
+                return Created($"v1/locacao/{locacao.IdLocacao}", locacao);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
 
         }
-
-        [HttpPut(template: "imovel")]
+        
+        [HttpPut(template: "locacao")]
         [ProducesResponseType(typeof(PessoaResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> PutAsync(
                 [FromServices] AppDbContext context,
-                [FromQuery] ImovelPutRequest request)
+                [FromQuery] LocacaoPutRequest request)
         {
             if (!ModelState.IsValid)
               return BadRequest(ModelState);
 
             try
             {
-                var imovel = await context.Imoveis.AsNoTracking().FirstOrDefaultAsync(x => x.IdIMovel == request.IdIMovel);
+                var locacao = await context.Locacoes.AsNoTracking().FirstOrDefaultAsync(x => x.IdLocacao == request.IdLocacao);
 
-                if (imovel == null)
+                if (locacao == null)
                    return NotFound();
 
-                if (request .IdEndereco <= 0 && request.IdProprietario <= 0 &&
-                    string.Compare(request.Descricao, imovel.Descricao) == 0 )
+                if (request.DtainicioLocacao == null && request.DtaFimLocacao == null &&
+                    request.Valor != locacao.Valor )
                     return BadRequest(new ErroResponse("Nenhuma informação para ser alterada!"));
 
-                imovel.Descricao = string.Compare(request.Descricao, imovel.Descricao) == 0 ? imovel.Descricao : request.Descricao;
+                locacao.DtainicioLocacao = request.DtainicioLocacao != null  ?  (DateTime)request.DtainicioLocacao : locacao.DtainicioLocacao;
 
-                var msg = VerificaSeExiste(imovel, context);
+                locacao.DtaFimLocacao = request.DtaFimLocacao != null ? (DateTime)request.DtaFimLocacao : locacao.DtaFimLocacao;
+
+                locacao.Valor = request.Valor != locacao.Valor ? request.Valor : locacao.Valor;
+
+                var msg = VerificaSeExiste(locacao, context);
 
                 if (!string.IsNullOrEmpty(msg))
                     return BadRequest(msg);
 
                 await context.SaveChangesAsync();
 
-                return Created($"v1/pessoa/{imovel.IdIMovel}", imovel);
+                return Created($"v1/locacao/{locacao.IdLocacao}", locacao);
             }
             catch (Exception ex)
-            {
+            { 
                 return BadRequest(ex.Message);
             }
         }
 
-        private string VerificaSeExiste(ImovelModel imovel, AppDbContext context)
+        private string VerificaSeExiste(LocacaoModel locacao, AppDbContext context)
         {
 
-            var resulte = _pessoaController.BuscaPessoa(imovel.IdProprietario, context);
+            var resultedereco = _pessoaController.BuscaPessoa(locacao.IdLocatario, context);
 
-            if (resulte == null || resulte.Id <= 0)
-                return "Identificador do Proprietario não encontrado!";
+            if (resultedereco == null || resultedereco.Id <= 0)
+                return "Identificador do Imovel não encontrado!";
 
-            var resultp = _enderecoController.BuscaEndereco(imovel.IdEndereco, context);
-            if (resultp == null || resultp.Id <= 0)
+            var resultadoimovel = _imovelcontroller.BuscaImovel(locacao.IdImovel, context);
+            if (resultadoimovel == null || resultadoimovel.Id <= 0)
                 return "Identificador do Endereço não encontrado!";
 
             return null;

@@ -47,11 +47,9 @@ namespace RentToParty.Controllers
         public async Task<IActionResult> GetByIdAsync([FromServices] AppDbContext context,
                                                        [FromRoute] int id)
         {
-            var imovel = await context.Imoveis.AsNoTracking().FirstOrDefaultAsync(x => x.IdIMovel == id);
+            var getimovel = BuscaImovel(id, context);
 
-            ImovelResponse getimovel = _mapper.Map<ImovelResponse>(imovel);
-
-            return imovel == null ? NotFound() : Ok(getimovel);
+            return getimovel == null ? NotFound() : Ok(getimovel);
         }
 
         [HttpPost(template: "imovel")]
@@ -84,7 +82,7 @@ namespace RentToParty.Controllers
         }
 
         [HttpPut(template: "imovel")]
-        [ProducesResponseType(typeof(PessoaResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ImovelSimplesResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> PutAsync(
                 [FromServices] AppDbContext context,
                 [FromQuery] ImovelPutRequest request)
@@ -99,20 +97,40 @@ namespace RentToParty.Controllers
                 if (imovel == null)
                    return NotFound();
 
-                if (request .IdEndereco <= 0 && request.IdProprietario <= 0 &&
-                    string.Compare(request.Descricao, imovel.Descricao) == 0 )
+                if ( string.Compare(request.Descricao, imovel.Descricao) == 0 )
                     return BadRequest(new ErroResponse("Nenhuma informação para ser alterada!"));
 
-                imovel.Descricao = string.Compare(request.Descricao, imovel.Descricao) == 0 ? imovel.Descricao : request.Descricao;
-
-                var msg = VerificaSeExiste(imovel, context);
-
-                if (!string.IsNullOrEmpty(msg))
-                    return BadRequest(msg);
+                imovel.Descricao = request.Descricao;
 
                 await context.SaveChangesAsync();
 
-                return Created($"v1/pessoa/{imovel.IdIMovel}", imovel);
+                return Created($"v1/imovel/{imovel.IdIMovel}", imovel);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete(template: "imovel/id")]
+
+        public async Task<IActionResult> DeleteAsync(
+                [FromServices] AppDbContext context, [FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var imovel = await context.Imoveis.AsNoTracking().FirstOrDefaultAsync(x => x.IdIMovel == id);
+
+                if (imovel == null)
+                    return NotFound();
+
+                context.Remove(imovel);
+                await context.SaveChangesAsync();
+
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -134,6 +152,15 @@ namespace RentToParty.Controllers
 
             return null;
 
+        }
+
+        public async Task<ImovelResponse> BuscaImovel(int id, AppDbContext context)
+        {
+            var imovel = await context.Imoveis.AsNoTracking().FirstOrDefaultAsync(x => x.IdIMovel == id);
+
+            ImovelResponse getimovel = _mapper.Map<ImovelResponse>(imovel);
+
+            return getimovel;
         }
         #endregion
     }

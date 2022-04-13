@@ -100,3 +100,4 @@ C:\dev\RentToParty\obj\Debug\RentToParty.dll
 C:\dev\RentToParty\obj\Debug\ref\RentToParty.dll
 C:\dev\RentToParty\obj\Debug\RentToParty.pdb
 C:\dev\RentToParty\obj\Debug\RentToParty.genruntimeconfig.cache
+C:\dev\RentToParty\obj\Debug\RentToParty.csproj.AssemblyReference.cache

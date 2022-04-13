@@ -19,15 +19,5 @@ namespace RentToParty.Request
         [StringLength(14, ErrorMessage = "A Descrição deve conter até 14 caracteres!")]
         public string Descricao { get; set; }
 
-        /// <summary>
-        /// Identificador do proprietario.
-        /// </summary>
-        public int IdProprietario { get; set; }
-
-        /// <summary>
-        /// Identificador do endereço.
-        /// </summary>
-        public int IdEndereco { get; set; }
-
     }
 }
