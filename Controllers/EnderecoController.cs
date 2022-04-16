@@ -171,7 +171,7 @@ namespace RentToParty.Controllers
             return enderecobusc;
         }
 
-        public async Task<EnderecoResponse> BuscaEndereco(int id, AppDbContext context)
+        private async Task<EnderecoResponse> BuscaEndereco(int id, AppDbContext context)
         {
             var endereco = await context.Enderecos.AsNoTracking().FirstOrDefaultAsync(x => x.IdEndereco == id);
 

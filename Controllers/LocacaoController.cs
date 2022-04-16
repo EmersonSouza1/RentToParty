@@ -128,18 +128,36 @@ namespace RentToParty.Controllers
         private string VerificaSeExiste(LocacaoModel locacao, AppDbContext context)
         {
 
-            var resultedereco = _pessoaController.BuscaPessoa(locacao.IdLocatario, context);
+            var resultedereco = BuscaPessoa(locacao.IdLocatario, context);
 
             if (resultedereco == null || resultedereco.Id <= 0)
                 return "Identificador do Imovel não encontrado!";
 
-            var resultadoimovel = _imovelcontroller.BuscaImovel(locacao.IdImovel, context);
+            var resultadoimovel = BuscaImovel(locacao.IdImovel, context);
             if (resultadoimovel == null || resultadoimovel.Id <= 0)
                 return "Identificador do Endereço não encontrado!";
 
             return null;
 
         }
+        private async Task<PessoaResponse> BuscaPessoa(int id, AppDbContext context)
+        {
+            var pessoa = await context.Pessoas.AsNoTracking().FirstOrDefaultAsync(x => x.IdPessoa == id);
+
+            var getpessoa = _mapper.Map<PessoaResponse>(pessoa);
+
+            return getpessoa;
+        }
+
+        private async Task<ImovelResponse> BuscaImovel(int id, AppDbContext context)
+        {
+            var imovel = await context.Imoveis.AsNoTracking().FirstOrDefaultAsync(x => x.IdIMovel == id);
+
+            ImovelResponse getimovel = _mapper.Map<ImovelResponse>(imovel);
+
+            return getimovel;
+        }
+
         #endregion
     }
 }

@@ -133,7 +133,7 @@ namespace RentToParty.Controllers
         {
             if (pessoa.IdEndereco > 0)
             {
-                var result = _enderecoController.BuscaEndereco(pessoa.IdEndereco, context);
+                var result = BuscaEndereco(pessoa.IdEndereco, context);
                 if (result == null || result.Id <= 0)
                     return "Identificador do Endereço não encontrado!";
             }
@@ -172,13 +172,22 @@ namespace RentToParty.Controllers
 
         }
 
-        public async Task<PessoaResponse> BuscaPessoa(int id, AppDbContext context)
+        private async Task<PessoaResponse> BuscaPessoa(int id, AppDbContext context)
         {
             var pessoa = await context.Pessoas.AsNoTracking().FirstOrDefaultAsync(x => x.IdPessoa == id);
 
             var getpessoa = _mapper.Map<PessoaResponse>(pessoa);
 
             return getpessoa;
+        }
+
+        private async Task<EnderecoResponse> BuscaEndereco(int id, AppDbContext context)
+        {
+            var endereco = await context.Enderecos.AsNoTracking().FirstOrDefaultAsync(x => x.IdEndereco == id);
+
+            var getendereco = _mapper.Map<EnderecoResponse>(endereco);
+
+            return getendereco;
         }
         #endregion
     }

@@ -81,9 +81,17 @@
               "target": "Package",
               "version": "[6.0.1, )"
             },
-            "Swashbuckle": {
+            "Swashbuckle.AspNetCore.Swagger": {
               "target": "Package",
-              "version": "[5.6.0, )"
+              "version": "[6.3.0, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerGen": {
+              "target": "Package",
+              "version": "[6.3.0, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerUI": {
+              "target": "Package",
+              "version": "[6.3.0, )"
             }
           },
           "imports": [

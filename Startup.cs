@@ -21,6 +21,10 @@ namespace RentToParty
             services.RegisterWebAPIServices();
             services.AddControllers();
             services.AddDbContext<AppDbContext>();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Rent to Party", Version = "v1" });
+            });
 
         }
 
@@ -31,6 +35,12 @@ namespace RentToParty
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(opt =>
+            {
+                opt.SwaggerEndpoint("../swagger/v1/swagger.json", "Rent To Party");
+            });
 
             app.UseRouting();
 

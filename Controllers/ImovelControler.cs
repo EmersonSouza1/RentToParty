@@ -141,12 +141,12 @@ namespace RentToParty.Controllers
         private string VerificaSeExiste(ImovelModel imovel, AppDbContext context)
         {
 
-            var resulte = _pessoaController.BuscaPessoa(imovel.IdProprietario, context);
+            var resulte = BuscaPessoa(imovel.IdProprietario, context);
 
             if (resulte == null || resulte.Id <= 0)
                 return "Identificador do Proprietario não encontrado!";
 
-            var resultp = _enderecoController.BuscaEndereco(imovel.IdEndereco, context);
+            var resultp = BuscaEndereco(imovel.IdEndereco, context);
             if (resultp == null || resultp.Id <= 0)
                 return "Identificador do Endereço não encontrado!";
 
@@ -154,13 +154,31 @@ namespace RentToParty.Controllers
 
         }
 
-        public async Task<ImovelResponse> BuscaImovel(int id, AppDbContext context)
+        private async Task<ImovelResponse> BuscaImovel(int id, AppDbContext context)
         {
             var imovel = await context.Imoveis.AsNoTracking().FirstOrDefaultAsync(x => x.IdIMovel == id);
 
             ImovelResponse getimovel = _mapper.Map<ImovelResponse>(imovel);
 
             return getimovel;
+        }
+
+        private async Task<EnderecoResponse> BuscaEndereco(int id, AppDbContext context)
+        {
+            var endereco = await context.Enderecos.AsNoTracking().FirstOrDefaultAsync(x => x.IdEndereco == id);
+
+            var getendereco = _mapper.Map<EnderecoResponse>(endereco);
+
+            return getendereco;
+        }
+
+        private async Task<PessoaResponse> BuscaPessoa(int id, AppDbContext context)
+        {
+            var pessoa = await context.Pessoas.AsNoTracking().FirstOrDefaultAsync(x => x.IdPessoa == id);
+
+            var getpessoa = _mapper.Map<PessoaResponse>(pessoa);
+
+            return getpessoa;
         }
         #endregion
     }
