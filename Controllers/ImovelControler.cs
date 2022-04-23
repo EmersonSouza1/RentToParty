@@ -143,11 +143,11 @@ namespace RentToParty.Controllers
 
             var resulte = BuscaPessoa(imovel.IdProprietario, context);
 
-            if (resulte == null || resulte.Id <= 0)
+            if (resulte.Result == null || resulte.Result?.IdPessoa <= 0)
                 return "Identificador do Proprietario não encontrado!";
 
             var resultp = BuscaEndereco(imovel.IdEndereco, context);
-            if (resultp == null || resultp.Id <= 0)
+            if (resultp.Result == null || resultp.Result?.IdEndereco <= 0)
                 return "Identificador do Endereço não encontrado!";
 
             return null;

@@ -7,7 +7,7 @@ namespace RentToParty.Request
     /// <summary>
     /// Locação.
     /// </summary>
-    public class LocacaoSimplesResponse
+    public class LocacaoResponse
     {
         /// <summary>
         /// Identificador da Locação.
@@ -17,12 +17,12 @@ namespace RentToParty.Request
         /// <summary>
         /// Identificador do imovel.
         /// </summary>
-        public ImovelSimplesResponse Imovel { get; set; }
+        public EnderecoSimplesResponse Endereco { get; set; }
 
         /// <summary>
         /// Identificador da Locação.
         /// </summary>
-        public PessoaResponse Locatario { get; set; }
+        public PessoaSimplesResponse Locatario { get; set; }
 
         /// <summary>
         /// Data de Inicio da Locação.

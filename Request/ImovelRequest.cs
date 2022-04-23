@@ -8,12 +8,6 @@ namespace RentToParty.Request
     public class ImovelRequest
     {
         /// <summary>
-        /// Identificador do Imovel.
-        /// </summary>
-        [Required(ErrorMessage = "O Identificador do imovel é obrigatorio!")]
-        public int IdIMovel { get; set; }
-
-        /// <summary>
         /// Descrição do Imovel.
         /// </summary>
         [Required(ErrorMessage = "O Identificador do imovel é obrigatorio!")]

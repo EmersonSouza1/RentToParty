@@ -44,8 +44,7 @@ namespace RentToParty.Infra.AutoMapper
                 .ForMember(x => x.IdEndereco, opt => opt.Ignore())
                 .ReverseMap();
 
-            CreateMap<EnderecoResponse, EnderecoModel>()
-                .ReverseMap();
+            CreateMap<EnderecoResponse, EnderecoModel>().ReverseMap();
 
             CreateMap<EnderecoPutRequest, EnderecoModel>().ReverseMap();
 
@@ -80,6 +79,22 @@ namespace RentToParty.Infra.AutoMapper
             #endregion
 
             #region Locacao
+
+            CreateMap<LocacaoRequest, LocacaoModel>()
+               .ForMember(x => x.IdLocacao, opt => opt.Ignore())
+               .ReverseMap();
+
+            CreateMap<LocacaoResponse, LocacaoModel>().ReverseMap();
+
+            CreateMap<LocacaoPutRequest, LocacaoModel>().ReverseMap();
+
+            CreateMap<LocacaoResponse, LocacaoRequest>().ReverseMap();
+
+            CreateMap<LocacaoResponse, LocacaoSimplesResponse>().ReverseMap();
+
+            CreateMap<LocacaoSimplesResponse, LocacaoModel>();
+
+            CreateMap<LocacaoModel, LocacaoSimplesResponse>();
 
             #endregion
 
