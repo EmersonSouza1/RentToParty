@@ -129,6 +129,28 @@ namespace RentToParty.Controllers
             }
         }
 
+        [HttpDelete(template: "pessoa/id")]
+        public async Task<IActionResult> DeleteAsync(
+                [FromServices] AppDbContext context, [FromRoute] int id)
+        {
+            try
+            {
+                var pessoa = await context.Pessoas.AsNoTracking().FirstOrDefaultAsync(x => x.IdPessoa == id);
+
+                if (pessoa == null)
+                    return NotFound();
+
+                context.Remove(pessoa);
+                await context.SaveChangesAsync();
+
+                return Ok("Pessoa removida com sucesso.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         private string AplicaMudancaEndereco(PessoaModel pessoa, AppDbContext context)
         {
             if (pessoa.IdEndereco > 0)

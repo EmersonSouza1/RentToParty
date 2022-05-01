@@ -1,26 +1,21 @@
 ﻿using RentToParty.Model.Enums;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
-namespace RentToParty.Model
+namespace RentToParty.Response
 {
-    /// <summary>
-    /// Tabela de Datas de Exssão das disponibilidade do imovel.
-    /// </summary>
-    [Table("Excessao_Dispo")]
-    public class Excessao_DispoModel
+    public class Excessao_DispoResponse
     {
         /// <summary>
         /// Identificador da excessao.
         /// </summary>
-        [Key()]
+        [JsonPropertyName("Id")]
         public int IdExcessao { get; set; }
 
         /// <summary>
         /// Identificador do Imovel.
         /// </summary>
-        [ForeignKey("Imovel")]
         public int IdImovel { get; set; }
 
         /// <summary>

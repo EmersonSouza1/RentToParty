@@ -7,10 +7,10 @@ namespace RentToParty.Model.Enums
         [EnumValue("Não Definida")]
         None = 0,
 
-        [EnumValue("Interna")]
+        [EnumValue("Qualitativa")]
         Interna = 1,
 
-        [EnumValue("Externa")]
+        [EnumValue("Quantitativa")]
         Externa = 2,
 
 

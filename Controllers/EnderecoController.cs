@@ -143,6 +143,28 @@ namespace RentToParty.Controllers
             }
         }
 
+        [HttpDelete(template: "endereco/id")]
+        public async Task<IActionResult> DeleteAsync(
+                [FromServices] AppDbContext context, [FromRoute] int id)
+        {
+            try
+            {
+                var locacao = await context.Locacoes.AsNoTracking().FirstOrDefaultAsync(x => x.IdLocacao == id);
+
+                if (locacao == null)
+                    return NotFound();
+
+                context.Remove(locacao);
+                await context.SaveChangesAsync();
+
+                return Ok("Endereço removido com sucesso.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
         #endregion
 

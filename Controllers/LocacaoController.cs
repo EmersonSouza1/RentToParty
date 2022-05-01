@@ -85,7 +85,7 @@ namespace RentToParty.Controllers
         }
         
         [HttpPut(template: "locacao")]
-        [ProducesResponseType(typeof(PessoaResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(LocacaoResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> PutAsync(
                 [FromServices] AppDbContext context,
                 [FromQuery] LocacaoPutRequest request)
@@ -121,6 +121,32 @@ namespace RentToParty.Controllers
             }
             catch (Exception ex)
             { 
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete(template: "locacao/id")]
+
+        public async Task<IActionResult> DeleteAsync(
+                [FromServices] AppDbContext context, [FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var locacao = await context.Locacoes.AsNoTracking().FirstOrDefaultAsync(x => x.IdLocacao == id);
+
+                if (locacao == null)
+                    return NotFound();
+
+                context.Remove(locacao);
+                await context.SaveChangesAsync();
+
+                return Ok("Locação removida com sucesso.");
+            }
+            catch (Exception ex)
+            {
                 return BadRequest(ex.Message);
             }
         }

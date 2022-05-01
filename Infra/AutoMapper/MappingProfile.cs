@@ -98,6 +98,18 @@ namespace RentToParty.Infra.AutoMapper
 
             #endregion
 
+            #region Caracteristica
+
+            CreateMap<CaracteristicaRequest, CaracteristicaModel>()
+                .ForMember(x => x.IdCaracteristica, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<CaracteristicaPutRequest, CaracteristicaModel>().ReverseMap();
+
+            CreateMap<CaracteristicaResponse, CaracteristicaModel>().ReverseMap();
+
+            #endregion
+
         }
     }
 }

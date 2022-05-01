@@ -1,3 +1,10 @@
+C:\dev\RentToParty\obj\Debug\RentToParty.csproj.AssemblyReference.cache
+C:\dev\RentToParty\obj\Debug\RentToParty.GeneratedMSBuildEditorConfig.editorconfig
+C:\dev\RentToParty\obj\Debug\RentToParty.AssemblyInfoInputs.cache
+C:\dev\RentToParty\obj\Debug\RentToParty.AssemblyInfo.cs
+C:\dev\RentToParty\obj\Debug\RentToParty.csproj.CoreCompileInputs.cache
+C:\dev\RentToParty\obj\Debug\RentToParty.MvcApplicationPartsAssemblyInfo.cs
+C:\dev\RentToParty\obj\Debug\RentToParty.MvcApplicationPartsAssemblyInfo.cache
 C:\dev\RentToParty\bin\Debug\appsettings.Development.json
 C:\dev\RentToParty\bin\Debug\appsettings.json
 C:\dev\RentToParty\bin\Debug\RentToParty.exe
@@ -49,6 +56,7 @@ C:\dev\RentToParty\bin\Debug\SQLitePCLRaw.batteries_v2.dll
 C:\dev\RentToParty\bin\Debug\SQLitePCLRaw.nativelibrary.dll
 C:\dev\RentToParty\bin\Debug\SQLitePCLRaw.core.dll
 C:\dev\RentToParty\bin\Debug\SQLitePCLRaw.provider.dynamic_cdecl.dll
+C:\dev\RentToParty\bin\Debug\Swashbuckle.AspNetCore.Annotations.dll
 C:\dev\RentToParty\bin\Debug\Swashbuckle.AspNetCore.Swagger.dll
 C:\dev\RentToParty\bin\Debug\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\dev\RentToParty\bin\Debug\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -85,12 +93,6 @@ C:\dev\RentToParty\bin\Debug\runtimes\win\lib\netcoreapp2.0\System.Diagnostics.P
 C:\dev\RentToParty\bin\Debug\runtimes\unix\lib\netstandard2.0\System.Private.ServiceModel.dll
 C:\dev\RentToParty\bin\Debug\runtimes\win\lib\netstandard2.0\System.Private.ServiceModel.dll
 C:\dev\RentToParty\bin\Debug\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\dev\RentToParty\obj\Debug\RentToParty.GeneratedMSBuildEditorConfig.editorconfig
-C:\dev\RentToParty\obj\Debug\RentToParty.AssemblyInfoInputs.cache
-C:\dev\RentToParty\obj\Debug\RentToParty.AssemblyInfo.cs
-C:\dev\RentToParty\obj\Debug\RentToParty.csproj.CoreCompileInputs.cache
-C:\dev\RentToParty\obj\Debug\RentToParty.MvcApplicationPartsAssemblyInfo.cs
-C:\dev\RentToParty\obj\Debug\RentToParty.MvcApplicationPartsAssemblyInfo.cache
 C:\dev\RentToParty\obj\Debug\scopedcss\bundle\RentToParty.styles.css
 C:\dev\RentToParty\obj\Debug\staticwebassets\RentToParty.StaticWebAssets.Manifest.cache
 C:\dev\RentToParty\obj\Debug\RentToParty.RazorTargetAssemblyInfo.cache

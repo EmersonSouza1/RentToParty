@@ -117,9 +117,6 @@ namespace RentToParty.Controllers
         public async Task<IActionResult> DeleteAsync(
                 [FromServices] AppDbContext context, [FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
             try
             {
                 var imovel = await context.Imoveis.AsNoTracking().FirstOrDefaultAsync(x => x.IdIMovel == id);
@@ -130,7 +127,7 @@ namespace RentToParty.Controllers
                 context.Remove(imovel);
                 await context.SaveChangesAsync();
 
-                return Ok();
+                return Ok("Imovel removido com sucesso.");
             }
             catch (Exception ex)
             {

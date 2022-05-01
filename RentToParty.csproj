@@ -16,6 +16,8 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.13" />
     <PackageReference Include="Nuke.Common" Version="6.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.3.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.3.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.3.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.3.0" />
@@ -26,6 +28,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Models\Enums\StatusDispoEnum.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Models\Enums\SituacaoExcEnum.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Models\Enums\StatusPrecoEnum.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Request\LocacaoPutRequest.cs">

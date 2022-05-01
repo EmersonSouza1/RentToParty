@@ -22,7 +22,7 @@ namespace RentToParty.Model
         public string Descricao { get; set; }
 
         /// <summary>
-        /// Tipo da caracteristica: 0 - Não Definida, 1 - Interna, 2 - Externa.
+        /// Tipo da caracteristica: 0 - Não Definida, 1 - Qualitativa, 2 - Quantitativa.
         /// </summary>
         public CaracteristicaEnum Tipo { get; set; }
 
